@@ -9,6 +9,7 @@ import { Avatar,
   useColorModeValue
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../../common/components';
+import { useAuth } from '../../utils/hooks';
 
 // a boilerplate -uh
 export const Home = () => (
