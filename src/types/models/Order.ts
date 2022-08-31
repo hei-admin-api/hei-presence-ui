@@ -8,5 +8,5 @@ export type Order = {
   contact: string,
   address: string,
   order_date: string,
-  status: true
+  status: string
 }

@@ -8,15 +8,20 @@ import { EditDrawer as proptypes } from '../../../../types/proptypes/edit/drawer
 import { useData } from '../../../../utils/hooks/use-data';
 
 export const OrderEdit = ({ label, mode }: proptypes) => {
-  const [categories, setCategories] = useState<Dish[]>([]);
+  const [dishes, setDishes] = useState<Dish[]>([]);
   const { save, update, getOne, getList } = useData<Partial<Order> | Dish>();
   const { id } = useParams();
   const navigate = useNavigate();
   const [order, setOrder] = useState<Partial<Order>>({
-    name: '',
+    ref: '',
     category: '',
-    price: 0,
-    quantity: 0
+    dish: '',
+    quantity: 0,
+    client_name: '',
+    contact: '',
+    address: '',
+    order_date: '',
+    status: 'DELIVRED'
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
@@ -27,12 +32,12 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const { data } = await getList('categories');
+        const { data } = await getList('dishes');
         if (mode === 'update' && id) {
-          const getDish = await getOne('dishes', +id);
-          setOrder(getDish as Partial<Dish>)
+          const getOrder = await getOne('orders', +id);
+          setOrder(getOrder as Partial<Dish>)
         }
-        setCategories(data as Dish[]);
+        setDishes(data as Dish[]);
       } catch (err) {
         console.log(err);
       }
@@ -45,14 +50,12 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
     const execute = async () => {
       try {
         if (mode === 'update' && id) {
-          const response = await update('dishes', +id, dish);
+          const response = await update('orders', +id, order);
           console.log(response);
-          navigate(`/dishes`);
+          navigate(`/orders`);
         } else {
-          save('dishes', dish);
+          save('orders', order);
         }
-
-        alert('pushed')
       } catch (err) {
         console.log(err);
       }
@@ -64,23 +67,33 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
   return (
     <EditDrawer label={label} mode={mode}>
       <Box>
-        <FormLabel htmlFor="name">Nom du plat</FormLabel>
+        <FormLabel htmlFor="name">Nom du client</FormLabel>
         <Input
-          placeholder='exemple: Gratin'
-          name="name"
-          value={dish.name}
+          placeholder='exemple: client'
+          name="client_name"
+          value={order.client_name}
           onChange={handleChange}
         />
       </Box>
 
 
       <Box>
-        <FormLabel htmlFor='price'>Prix du plat</FormLabel>
+        <FormLabel htmlFor='contact'>Contact</FormLabel>
         <Input
-          placeholder='exemple: 20000'
+          placeholder='exemple: 034 032 512 36'
           onChange={handleChange}
           name="price"
-          value={dish.price}
+          value={order.contact}
+        />
+      </Box>
+
+      <Box>
+        <FormLabel htmlFor='quantity'>Quantité</FormLabel>
+        <Input
+          placeholder='exemple: 6'
+          onChange={handleChange}
+          name="quantity"
+          value={order.quantity}
         />
       </Box>
 
@@ -88,28 +101,27 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
 
       <Box>
         <FormLabel htmlFor='category'>Selectionner la catégorie du plat</FormLabel>
-        <Select id='owner' defaultValue='segun' onChange={handleChange} name="category" value={dish.category}>
-          {categories.map((category) => (
-            <option value={category.label}>{category.label}</option>
+        <Select id='owner' onChange={handleChange} name="dish" value={order.category}>
+          {dishes.map((dish) => (
+            <option value={dish.name}>{dish.name}</option>
           ))}
         </Select>
       </Box>
 
       <Box>
-        <FormLabel htmlFor='quantity'>Entrer la quantité initial</FormLabel>
-        <Input
-          placeholder='exemple: 100'
-          onChange={handleChange}
-          name="quantity"
-          value={dish.quantity}
-        />
+        <FormLabel htmlFor='category'>Selectionner la catégorie du plat</FormLabel>
+        <Select id='owner' defaultValue='segun' onChange={handleChange} name="status" value={order.status === 'DELIVRED' ? 'livré' : 'en cours'}>
+          <option value={order.status}>Livré</option>
+          <option value={order.status}>en cours</option>
+        </Select>
       </Box>
+
 
       <Divider />
 
       <Stack spacing='24px' direction="row">
         <Button colorScheme="whatsapp" onClick={SaveEdit}>Enregistrer</Button>
-        <Button colorScheme='red' onClick={() => navigate(`/dishes`)}>Annuler la modification</Button>
+        <Button colorScheme='red' onClick={() => navigate(`/orders`)}>Annuler la modification</Button>
       </Stack>
     </EditDrawer>
   );
