@@ -17,6 +17,7 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../../common/components';
+import { useAuth } from '../../utils/hooks';
 
 export const Home = ()=>{
   return (
