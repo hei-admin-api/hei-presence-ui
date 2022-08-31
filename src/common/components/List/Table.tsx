@@ -1,10 +1,14 @@
-import { keyframes, Table as TableContent, TableContainer, Tbody, Td, Th, Thead, Tr, useColorModeValue } from '@chakra-ui/react'
+import { IconButton, keyframes, Table as TableContent, TableContainer, Tbody, Td, Th, Thead, Tr, useColorModeValue } from '@chakra-ui/react'
 import { useCallback, useEffect, useState } from 'react'
+import { FaEdit } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { DishEdit } from '../../../pages/Home/components/dish';
 import { TableProps } from '../../../types/proptypes'
 import { useData } from '../../../utils/hooks/use-data';
 
 export const Table = ({ fields, resource }: TableProps) => {
   const [dataSet, setDataSet] = useState<any[]>([]);
+  const navigate = useNavigate();
   const { getList } = useData();
 
   useEffect(() => {
@@ -20,35 +24,44 @@ export const Table = ({ fields, resource }: TableProps) => {
     fetch();
   }, []);
 
+  const navigateToEdit = (id: number) => {
+    navigate(`/${resource}/${id}`);
+  }
+
   const renderData = useCallback(() => (
     dataSet.map((dataset) => {
       const keys = Object.keys(dataset);
       return (
-        <Tr>
-          {keys.map((k) => (
-            k !== 'id' && <Td>{dataset[k as keyof typeof dataset]}</Td>
-          ))}
+        <Tr onClick={() => navigateToEdit(dataset.id)} _hover={{bg: 'blackAlpha.100', cursor: 'pointer'}}>
+          {keys.map((k) => {
+            const value = dataset[k as keyof typeof dataset];
+            return k !== 'id' && (
+              <Td>{value}</Td>
+            )
+          })}
         </Tr>
       )
     })
   ), [dataSet]);
-  
+
   return (
-    <TableContainer bg={useColorModeValue("whiteAlpha.900", "blackAlpha.200")} borderRadius={4}>
-      <TableContent variant='simple'>
+    <>
+      <TableContainer bg={useColorModeValue("whiteAlpha.900", "blackAlpha.200")} borderRadius={4}>
+        <TableContent variant='simple'>
 
-        <Thead>
-          <Tr>
-            {fields.map((label) => (
-              <Th>{label}</Th>
-            ))}
-          </Tr>
-        </Thead>
+          <Thead>
+            <Tr>
+              {fields.map((label) => (
+                <Th>{label}</Th>
+              ))}
+            </Tr>
+          </Thead>
 
-        <Tbody>
-          {renderData()}
-        </Tbody>
-      </TableContent>
-    </TableContainer>
+          <Tbody>
+            {renderData()}
+          </Tbody>
+        </TableContent>
+      </TableContainer>
+    </>
   )
 }

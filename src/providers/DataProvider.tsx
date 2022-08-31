@@ -20,7 +20,7 @@ export function DataProvider({ children }: WithChildren) {
     axios.post(`${API_BASE_URL}/${resource}`, props);
 
   const update = (resource: string, id: number, props: unknown) =>
-    axios.put(`${API_BASE_URL}/${resource}/${id}`, props);
+    axios.patch(`${API_BASE_URL}/${resource}/${id}`, props);
 
   const methodToProvide = useMemo<DataService>(
     () => ({

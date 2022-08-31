@@ -3,16 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { EditDrawer } from '../../../../common/components';
 import { Dish } from '../../../../types/models/Dish';
-import { DishCategory } from '../../../../types/models/DishCategory';
+import { Order } from '../../../../types/models/Order';
 import { EditDrawer as proptypes } from '../../../../types/proptypes/edit/drawer';
 import { useData } from '../../../../utils/hooks/use-data';
 
-export const DishEdit = ({ label, mode }: proptypes) => {
-  const [categories, setCategories] = useState<DishCategory[]>([]);
-  const { save, update, getOne, getList } = useData<Partial<Dish> | DishCategory>();
+export const OrderEdit = ({ label, mode }: proptypes) => {
+  const [categories, setCategories] = useState<Dish[]>([]);
+  const { save, update, getOne, getList } = useData<Partial<Order> | Dish>();
   const { id } = useParams();
   const navigate = useNavigate();
-  const [dish, setDish] = useState<Partial<Dish>>({
+  const [order, setOrder] = useState<Partial<Order>>({
     name: '',
     category: '',
     price: 0,
@@ -21,7 +21,7 @@ export const DishEdit = ({ label, mode }: proptypes) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
-    setDish(prev => ({ ...prev, [name]: value }));
+    setOrder(prev => ({ ...prev, [name]: value }));
   }
 
   useEffect(() => {
@@ -30,9 +30,9 @@ export const DishEdit = ({ label, mode }: proptypes) => {
         const { data } = await getList('categories');
         if (mode === 'update' && id) {
           const getDish = await getOne('dishes', +id);
-          setDish(getDish as Partial<Dish>)
+          setOrder(getDish as Partial<Dish>)
         }
-        setCategories(data as DishCategory[]);
+        setCategories(data as Dish[]);
       } catch (err) {
         console.log(err);
       }
