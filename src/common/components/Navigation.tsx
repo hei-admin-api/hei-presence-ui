@@ -9,10 +9,10 @@ export const Navigation = ({ children }: WithChildren) => {
 
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
-      <SidebarContent
+      {/* <SidebarContent
         onClose={() => onClose}
         display={{ base: 'none', md: 'block' }}
-      />
+      /> */}
       <Drawer
         autoFocus={false}
         isOpen={isOpen}

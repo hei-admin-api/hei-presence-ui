@@ -1,7 +1,10 @@
-import { Box, CloseButton, Flex, Link, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, CloseButton, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import { SidebarProps } from "../../../types/proptypes/navigation";
 import { NavItem } from "./NavItem";
 import { LinkItems } from "./LinkItems";
+import { useCallback } from "react";
+import { LinkItem } from "../../../types/proptypes/navigation/LinkItem";
+import { FaCoffee, FaFileInvoice } from "react-icons/fa";
 
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
@@ -20,11 +23,14 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.label} icon={link.icon} to={link.to}>
-          {link.label}
-        </NavItem>
-      ))}
+
+      <NavItem to="/dishes" icon={FaCoffee}>
+        Plats
+      </NavItem>
+      
+      <NavItem to="/orders" icon={FaFileInvoice}>
+        Orders
+      </NavItem>
     </Box>
   );
 };

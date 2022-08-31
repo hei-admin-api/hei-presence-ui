@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ComponentType } from "react";
 import { FlexProps } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 

@@ -3,13 +3,13 @@ import { LinkItem } from "../../../types/proptypes/navigation/LinkItem";
 
 export const LinkItems: LinkItem[]  = [
   {
-    label: "Plats",
+    label: 'Plats',
     icon: FaCoffee,
-    to: "/dishes"
+    to: '/dishes'
   },
   {
-    label: "Commande",
+    label: 'Commande',
     icon: FaFirstOrder,
-    to: "/orders"
+    to: '/orders'
   }
 ]
