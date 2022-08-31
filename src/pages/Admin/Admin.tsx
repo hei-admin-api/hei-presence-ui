@@ -1,5 +1,4 @@
-import React from 'react';
-import { Button, HStack, Text, useColorModeValue } from '@chakra-ui/react';
+import { Button, HStack } from '@chakra-ui/react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Navigation } from '../../common/components';
 import { FaEdit } from 'react-icons/fa';

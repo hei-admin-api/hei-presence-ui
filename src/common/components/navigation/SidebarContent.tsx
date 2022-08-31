@@ -1,10 +1,7 @@
 import { Box, CloseButton, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import { SidebarProps } from "../../../types/proptypes/navigation";
 import { NavItem } from "./NavItem";
-import { LinkItems } from "./LinkItems";
-import { useCallback } from "react";
-import { LinkItem } from "../../../types/proptypes/navigation/LinkItem";
-import { FaBars, FaCoffee, FaCreativeCommonsSampling, FaFileInvoice } from "react-icons/fa";
+import { FaBars, FaCoffee, FaFileInvoice } from "react-icons/fa";
 
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
