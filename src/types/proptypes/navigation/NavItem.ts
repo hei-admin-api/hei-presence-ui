@@ -4,5 +4,6 @@ import { IconType } from "react-icons";
 
 export type NavItemProps = FlexProps & {
   icon: IconType;
+  to: string;
   children: React.ReactNode;
 }
