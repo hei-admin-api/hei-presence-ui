@@ -52,7 +52,7 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
         if (mode === 'update' && id) {
           const response = await update('orders', +id, order);
           console.log(response);
-          navigate(`/orders`);
+          navigate(`/admin/orders`);
         } else {
           save('orders', order);
         }
@@ -121,7 +121,7 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
 
       <Stack spacing='24px' direction="row">
         <Button colorScheme="whatsapp" onClick={SaveEdit}>Enregistrer</Button>
-        <Button colorScheme='red' onClick={() => navigate(`/orders`)}>Annuler la modification</Button>
+        <Button colorScheme='red' onClick={() => navigate(`/admin/orders`)}>Annuler la modification</Button>
       </Stack>
     </EditDrawer>
   );

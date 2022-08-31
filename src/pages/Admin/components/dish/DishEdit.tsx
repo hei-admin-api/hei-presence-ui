@@ -47,7 +47,7 @@ export const DishEdit = ({ label, mode }: proptypes) => {
         if (mode === 'update' && id) {
           const response = await update('dishes', +id, dish);
           console.log(response);
-          navigate(`/dishes`);
+          navigate(`/admin/dishes`);
         } else {
           save('dishes', dish);
         }
@@ -109,7 +109,7 @@ export const DishEdit = ({ label, mode }: proptypes) => {
 
       <Stack spacing='24px' direction="row">
         <Button colorScheme="whatsapp" onClick={SaveEdit}>Enregistrer</Button>
-        <Button colorScheme='red' onClick={() => navigate(`/dishes`)}>Annuler la modification</Button>
+        <Button colorScheme='red' onClick={() => navigate(`/admin/dishes`)}>Annuler la modification</Button>
       </Stack>
     </EditDrawer>
   );

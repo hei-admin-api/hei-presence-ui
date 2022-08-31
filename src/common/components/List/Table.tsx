@@ -23,7 +23,7 @@ export const Table = ({ fields, resource }: TableProps) => {
   }, []);
 
   const navigateToEdit = (id: number) => {
-    navigate(`/${resource}/${id}`);
+    navigate(`/admin/${resource}/${id}`);
   }
 
   const renderData = useCallback(() => (
