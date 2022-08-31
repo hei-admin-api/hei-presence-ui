@@ -1,9 +1,10 @@
-import { Flex, Icon, Link, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Icon, useColorModeValue } from "@chakra-ui/react";
 import { NavItemProps } from "../../../types/proptypes";
+import { Link } from "react-router-dom";
 
 export const NavItem = ({ icon, to, children, ...rest }: NavItemProps) => {
   return (
-    <Link href={to} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+    <Link to={to} style={{ textDecoration: 'none' }}>
       <Flex
         align="center"
         p="4"
