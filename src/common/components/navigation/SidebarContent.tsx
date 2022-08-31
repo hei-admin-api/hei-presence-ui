@@ -4,7 +4,7 @@ import { NavItem } from "./NavItem";
 import { LinkItems } from "./LinkItems";
 import { useCallback } from "react";
 import { LinkItem } from "../../../types/proptypes/navigation/LinkItem";
-import { FaCoffee, FaFileInvoice } from "react-icons/fa";
+import { FaBars, FaCoffee, FaCreativeCommonsSampling, FaFileInvoice } from "react-icons/fa";
 
 export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
@@ -29,7 +29,11 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       </NavItem>
       
       <NavItem to="orders" icon={FaFileInvoice}>
-        Orders
+        Commandes
+      </NavItem>
+
+      <NavItem to="categories" icon={FaBars}>
+        Catégories de plat
       </NavItem>
     </Box>
   );
