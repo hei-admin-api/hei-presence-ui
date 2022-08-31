@@ -1,26 +1,29 @@
-import { Box, Button, Divider, FormLabel, Input, InputGroup, InputLeftAddon, InputRightAddon, Select, Stack, Textarea, useDisclosure } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Box, Button, Divider, FormLabel, HStack, Input, Select, Stack } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { EditDrawer as proptypes } from '../../../../types/proptypes/edit/drawer';
 import { EditDrawer } from '../../../../common/components';
 import { Dish } from '../../../../types/models/Dish';
 import { Order } from '../../../../types/models/Order';
 import { useData } from '../../../../utils/hooks/use-data';
+import { DishCategory } from '../../../../types/models/DishCategory';
+import { filterDishes } from '../../../../utils/functions';
 
 export const OrderEdit = ({ label, mode }: proptypes) => {
-  const [dishes, setDishes] = useState<Dish[]>([]);
-  const { save, update, getOne, getList } = useData<Partial<Order> | Dish>();
-  const { id } = useParams();
+  const { save, update, getOne, getList } = useData<Partial<Order | DishCategory> | Dish>();
   const navigate = useNavigate();
+  const [selectedFilter, setSelectedFilter] = useState('');
+  const [dishes, setDishes] = useState<Dish[]>([]);
+  const [categories, setCategories] = useState<DishCategory[]>([]);
+  const { id } = useParams();
   const [order, setOrder] = useState<Partial<Order>>({
     ref: '',
-    category: '',
-    dish: '',
+    dish: 0,
     quantity: 0,
-    client_name: '',
+    clientName: '',
     contact: '',
     address: '',
-    order_date: '',
+    orderDate: '',
     status: 'DELIVRED'
   });
 
@@ -30,14 +33,17 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
   }
 
   useEffect(() => {
+    filterDishesByCategory();
     const fetch = async () => {
       try {
         const { data } = await getList('dishes');
+        const categories = await getList('categories');
+        setDishes(data as Dish[]);
+        setCategories(categories.data as DishCategory[]);
         if (mode === 'update' && id) {
           const getOrder = await getOne('orders', +id);
           setOrder(getOrder as Partial<Dish>)
         }
-        setDishes(data as Dish[]);
       } catch (err) {
         console.log(err);
       }
@@ -46,6 +52,10 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
     fetch();
   }, []);
 
+  const filterDishesByCategory = useCallback(() => (
+    filterDishes(selectedFilter, dishes)
+  ), [selectedFilter]);
+  
   const SaveEdit = () => {
     const execute = async () => {
       try {
@@ -71,7 +81,7 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
         <Input
           placeholder='exemple: client'
           name="client_name"
-          value={order.client_name}
+          value={order.clientName}
           onChange={handleChange}
         />
       </Box>
@@ -97,25 +107,29 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
         />
       </Box>
 
-
-
       <Box>
-        <FormLabel htmlFor='category'>Selectionner la catégorie du plat</FormLabel>
-        <Select id='owner' onChange={handleChange} name="dish" value={order.category}>
-          {dishes.map((dish) => (
-            <option value={dish.name}>{dish.name}</option>
-          ))}
-        </Select>
-      </Box>
+        <HStack width="container.md">
+          <Box>
+            <FormLabel htmlFor='category'>Selectionner la categorie</FormLabel>
+            <Select onChange={(e) => setSelectedFilter(e.target.value)} name="filterMethod" value={selectedFilter} defaultValue={"none"}>
+              {categories.map((category) => (
+                <option value={category.label} key={category.id}>{category.label}</option>
+              ))}
+              <option value="none">Afficher tout</option>
+            </Select>
+          </Box>
 
-      <Box>
-        <FormLabel htmlFor='category'>Selectionner la catégorie du plat</FormLabel>
-        <Select id='owner' defaultValue='segun' onChange={handleChange} name="status" value={order.status === 'DELIVRED' ? 'livré' : 'en cours'}>
-          <option value={order.status}>Livré</option>
-          <option value={order.status}>en cours</option>
-        </Select>
-      </Box>
+          <Box>
+            <FormLabel htmlFor='category'>Selectionner le plat</FormLabel>
+            <Select onChange={handleChange} name="dish" value={order.dish}>
+              {filterDishesByCategory().map((dish: Dish) => (
+                <option value={dish.id} key={dish.id}>{dish.name}</option>
+              ))}
+            </Select>
+          </Box>
 
+        </HStack>
+      </Box>
 
       <Divider />
 

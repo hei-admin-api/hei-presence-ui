@@ -1,12 +1,11 @@
 export type Order = {
   id: number,
   ref: string,
-  category: string,
-  dish: string,
+  dish: number,
   quantity: number,
-  client_name: string,
+  clientName: string,
   contact: string,
   address: string,
-  order_date: string,
+  orderDate: string,
   status: string
 }
