@@ -1,11 +1,12 @@
 import React from 'react';
-import { Home } from './pages/Home';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import { HackWebProviders } from './providers/HackWebProviders';
-import { DishEdit, DishList } from './pages/Home/components/dish';
-import { OrderList } from './pages/Home/components/orders';
-import { OrderEdit } from './pages/Home/components/orders/OrderEdit';
+import { Landing } from './pages/Landing';
+import { Admin } from './pages/Admin';
+import { DishEdit, DishList } from './pages/Admin/components/dish';
+import { OrderEdit } from './pages/Admin/components/orders/OrderEdit';
+import { OrderList } from './pages/Admin/components/orders';
 
 export const App = () => {
   return (
@@ -13,16 +14,22 @@ export const App = () => {
       <HackWebProviders>
         <ChakraProvider theme={theme}>
           <Routes>
-            <Route path="/" element={<Home />}>
+
+            <Route index element={<Navigate to="/landing" />} />
+            <Route path="/landing" element={<Landing />} />
+            
+            <Route path="/admin" element={<Admin />}>
               <Route index element={<Navigate to="dishes" />} />
+
               <Route path="dishes" element={<DishList />} />
-              <Route path="dishes/:id" element={<DishEdit mode='update' label="Modifier le plat" />} />
-              <Route path="dishes/create" element={<DishEdit mode='add' label="Modifier le plat" />} />
+              <Route path="dishes/:id" element={<DishEdit mode="update" label="" />} />
+              <Route path="dishes/create" element={<DishEdit mode="add" label="" />} />
 
               <Route path="orders" element={<OrderList />} />
-              <Route path="orders/:id" element={<OrderEdit mode="update" label="Modifier la command" />} />
-              <Route path="orders/create" element={<OrderEdit mode="add" label="Modifier la command" />} />
+              <Route path="orders/:id" element={<OrderEdit mode="update" label="" />} />
+              <Route path="orders/create" element={<OrderEdit mode="add" label="" />} />
             </Route>
+
           </Routes>
         </ChakraProvider>
       </HackWebProviders>

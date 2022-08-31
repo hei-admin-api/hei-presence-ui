@@ -24,11 +24,11 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
 
-      <NavItem to="/dishes" icon={FaCoffee}>
+      <NavItem to="dishes" icon={FaCoffee}>
         Plats
       </NavItem>
       
-      <NavItem to="/orders" icon={FaFileInvoice}>
+      <NavItem to="orders" icon={FaFileInvoice}>
         Orders
       </NavItem>
     </Box>

@@ -1,10 +1,10 @@
 import { Box, Button, Divider, FormLabel, Input, InputGroup, InputLeftAddon, InputRightAddon, Select, Stack, Textarea, useDisclosure } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { EditDrawer as proptypes } from '../../../../types/proptypes/edit/drawer';
 import { EditDrawer } from '../../../../common/components';
 import { Dish } from '../../../../types/models/Dish';
 import { Order } from '../../../../types/models/Order';
-import { EditDrawer as proptypes } from '../../../../types/proptypes/edit/drawer';
 import { useData } from '../../../../utils/hooks/use-data';
 
 export const OrderEdit = ({ label, mode }: proptypes) => {

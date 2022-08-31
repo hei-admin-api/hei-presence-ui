@@ -1,8 +1,6 @@
-import { IconButton, keyframes, Table as TableContent, TableContainer, Tbody, Td, Th, Thead, Tr, useColorModeValue } from '@chakra-ui/react'
+import { Table as TableContent, TableContainer, Tbody, Td, Th, Thead, Tr, useColorModeValue } from '@chakra-ui/react'
 import { useCallback, useEffect, useState } from 'react'
-import { FaEdit } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { DishEdit } from '../../../pages/Home/components/dish';
 import { TableProps } from '../../../types/proptypes'
 import { useData } from '../../../utils/hooks/use-data';
 
