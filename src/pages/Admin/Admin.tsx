@@ -6,6 +6,7 @@ import { translatePath } from '../../utils/functions';
 
 export const Admin = () => {
   const { pathname } = useLocation();
+  console.log(pathname)
   const navigate = useNavigate();
 
   return (

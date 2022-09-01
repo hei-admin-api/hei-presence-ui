@@ -7,17 +7,21 @@ import { Dish } from '../../../../types/models/Dish';
 import { DishCategory } from '../../../../types/models/DishCategory';
 import { useData } from '../../../../utils/hooks/use-data';
 
+const INITIAL_DISH: Omit<Dish, "id"> = {
+  name: '',
+  price: 0,
+  category: '',
+  quantity:	0,
+  orderNumber: 0,
+  url: '',
+}
+
 export const DishEdit = ({ label, mode }: proptypes) => {
   const [categories, setCategories] = useState<DishCategory[]>([]);
-  const { save, update, getOne, getList } = useData<Partial<Dish> | DishCategory>();
+  const { save, update, getOne, getList } = useData<Omit<Dish | DishCategory, "id">>();
   const { id } = useParams();
   const navigate = useNavigate();
-  const [dish, setDish] = useState<Partial<Dish>>({
-    name: '',
-    category: '',
-    price: 0,
-    quantity: 0
-  });
+  const [dish, setDish] = useState(INITIAL_DISH);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,14 +29,16 @@ export const DishEdit = ({ label, mode }: proptypes) => {
   }
 
   useEffect(() => {
+    console.log(dish);
+
     const fetch = async () => {
       try {
         const { data } = await getList('categories');
-        if (mode === 'update' && id) {
-          const getDish = await getOne('dishes', +id);
-          setDish(getDish as Partial<Dish>)
-        }
         setCategories(data as DishCategory[]);
+        if (mode === 'update' && id) {
+          const { data } = await getOne('dishes', +id);
+          setDish(data as Omit<Dish, "id">);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -42,17 +48,16 @@ export const DishEdit = ({ label, mode }: proptypes) => {
   }, []);
 
   const SaveEdit = () => {
+    console.log(dish);
     const execute = async () => {
       try {
         if (mode === 'update' && id) {
-          const response = await update('dishes', +id, dish);
-          console.log(response);
+          await update('dishes', +id, dish);
           navigate(`/admin/dishes`);
         } else {
           save('dishes', dish);
+          navigate(`/admin/dishes`);
         }
-
-        alert('pushed')
       } catch (err) {
         console.log(err);
       }
@@ -67,30 +72,29 @@ export const DishEdit = ({ label, mode }: proptypes) => {
         <FormLabel htmlFor="name">Nom du plat</FormLabel>
         <Input
           placeholder='exemple: Gratin'
-          name="name"
           value={dish.name}
+          name="name"
           onChange={handleChange}
+          type="text"
         />
       </Box>
-
 
       <Box>
-        <FormLabel htmlFor='price'>Prix du plat</FormLabel>
+        <FormLabel htmlFor="name">Prix du plat</FormLabel>
         <Input
-          placeholder='exemple: 20000'
-          onChange={handleChange}
-          name="price"
+          placeholder='exemple: 1000'
           value={dish.price}
+          name="price"
+          onChange={handleChange}
+          type="number"
         />
       </Box>
-
-
 
       <Box>
         <FormLabel htmlFor='category'>Selectionner la catégorie du plat</FormLabel>
-        <Select id='owner' defaultValue='segun' onChange={handleChange} name="category" value={dish.category}>
+        <Select onChange={handleChange} name="category" value={dish.category}>
           {categories.map((category) => (
-            <option value={category.label}>{category.label}</option>
+            <option value={category.label} key={category.label}>{category.label}</option>
           ))}
         </Select>
       </Box>
@@ -99,9 +103,10 @@ export const DishEdit = ({ label, mode }: proptypes) => {
         <FormLabel htmlFor='quantity'>Entrer la quantité initial</FormLabel>
         <Input
           placeholder='exemple: 100'
-          onChange={handleChange}
-          name="quantity"
           value={dish.quantity}
+          onChange={handleChange}
+          type="number"
+          name="quantity"
         />
       </Box>
 

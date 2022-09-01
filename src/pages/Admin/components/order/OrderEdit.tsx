@@ -17,14 +17,12 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
   const [categories, setCategories] = useState<DishCategory[]>([]);
   const { id } = useParams();
   const [order, setOrder] = useState<Partial<Order>>({
-    ref: '',
     dish: 0,
     quantity: 0,
     clientName: '',
     contact: '',
     address: '',
-    orderDate: '',
-    status: 'DELIVRED'
+    status: 'DELIVERED'
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
@@ -37,12 +35,12 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
     const fetch = async () => {
       try {
         const { data } = await getList('dishes');
-        const categories = await getList('categories');
         setDishes(data as Dish[]);
+        const categories = await getList('categories');
         setCategories(categories.data as DishCategory[]);
         if (mode === 'update' && id) {
           const getOrder = await getOne('orders', +id);
-          setOrder(getOrder as Partial<Dish>)
+          setOrder(getOrder.data as Omit<Order, "id" | "orderDate" | "category">)
         }
       } catch (err) {
         console.log(err);
@@ -59,12 +57,13 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
   const SaveEdit = () => {
     const execute = async () => {
       try {
+        console.log(order);
         if (mode === 'update' && id) {
-          const response = await update('orders', +id, order);
-          console.log(response);
+          await update('orders', +id, order);
           navigate(`/admin/orders`);
         } else {
-          save('orders', order);
+          await save('orders', order);
+          navigate('/admin/orders');
         }
       } catch (err) {
         console.log(err);
@@ -80,7 +79,7 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
         <FormLabel htmlFor="name">Nom du client</FormLabel>
         <Input
           placeholder='exemple: client'
-          name="client_name"
+          name="clientName"
           value={order.clientName}
           onChange={handleChange}
         />
@@ -92,8 +91,20 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
         <Input
           placeholder='exemple: 034 032 512 36'
           onChange={handleChange}
-          name="price"
+          name="contact"
+          type="text"
           value={order.contact}
+        />
+      </Box>
+
+      <Box>
+        <FormLabel htmlFor='contact'>Addresse</FormLabel>
+        <Input
+          placeholder='exemple: LOT IVH'
+          onChange={handleChange}
+          name="addresse"
+          type="text"
+          value={order.address}
         />
       </Box>
 
@@ -111,7 +122,7 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
         <HStack width="container.md">
           <Box>
             <FormLabel htmlFor='category'>Selectionner la categorie</FormLabel>
-            <Select onChange={(e) => setSelectedFilter(e.target.value)} name="filterMethod" value={selectedFilter} defaultValue={"none"}>
+            <Select onChange={(e) => setSelectedFilter(e.target.value)} name="filterMethod" value={selectedFilter || 'none'}>
               {categories.map((category) => (
                 <option value={category.label} key={category.id}>{category.label}</option>
               ))}
@@ -121,10 +132,11 @@ export const OrderEdit = ({ label, mode }: proptypes) => {
 
           <Box>
             <FormLabel htmlFor='category'>Selectionner le plat</FormLabel>
-            <Select onChange={handleChange} name="dish" value={order.dish}>
+            <Select onChange={handleChange} name="dish" value={order.dish || 1}>
               {filterDishesByCategory().map((dish: Dish) => (
-                <option value={dish.id} key={dish.id}>{dish.name}</option>
+                <option value={dish.name} key={dish.id}>{dish.name}</option>
               ))}
+              <option value={1}>Gratin</option>
             </Select>
           </Box>
 

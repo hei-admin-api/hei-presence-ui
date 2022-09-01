@@ -4,4 +4,6 @@ export type Dish = {
   price: number;
   category: string;
   quantity:	number;
+  orderNumber: number;
+  url: string;
 }

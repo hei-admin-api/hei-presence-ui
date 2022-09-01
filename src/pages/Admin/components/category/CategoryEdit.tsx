@@ -42,7 +42,8 @@ export const CategoryEdit = ({ label, mode }: proptypes) => {
           await update('categories', +id, category);
           navigate(`/admin/categories`);
         } else {
-          save('orders', category);
+          await save('categories', category);
+          navigate(`/admin/categories`);
         }
       } catch (err) {
         console.log(err);

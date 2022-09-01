@@ -1,4 +1,4 @@
 import { Context, createContext } from "react";
-import { RedefineContext } from "./Redefined";
+import { RedefineContext } from "../../types/dataUtils/Redefined";
 
 export const AuthContext = (<RedefineContext>createContext)();
