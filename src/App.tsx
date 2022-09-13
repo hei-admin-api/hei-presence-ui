@@ -9,6 +9,7 @@ import { OrderEdit } from './pages/Admin/components/order/OrderEdit';
 import { OrderList } from './pages/Admin/components/order';
 import { CategoryEdit, CategoryList } from './pages/Admin/components/category';
 import {TakePhoto} from "./common/components/TakePhoto";
+import {Authentication} from "./pages/Landing/components";
 
 export const App = () => {
   return (
@@ -17,7 +18,8 @@ export const App = () => {
         <ChakraProvider theme={theme}>
           <Routes>
 
-            <Route index element={<Navigate to="/landing" />} />
+            <Route index element={<Navigate to="/login" />} />
+            <Route path="/login" element={<Authentication />} />
             <Route path="/landing" element={<Landing />} />
             <Route path="/takephoto" element={<TakePhoto />} />
 

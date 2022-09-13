@@ -10,12 +10,14 @@ const videoConstraints = {
 
 export const TakePhoto = () => {
     const [isCaptureEnable, setCaptureEnable] = useState<boolean>(false);
+    const[photo,setPhoto] = useState<boolean |null >(true);
     const webcamRef = useRef<Webcam>(null);
     const [url, setUrl] = useState<string | null>(null);
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current?.getScreenshot();
         if (imageSrc) {
-            setUrl(imageSrc);
+             setUrl(imageSrc);
+             setPhoto(false)
         }
     }, [webcamRef]);
 
@@ -29,20 +31,28 @@ export const TakePhoto = () => {
             )}
             {isCaptureEnable && (
                 <>
+
                     <div>
-                        <button onClick={() => setCaptureEnable(false)}></button>
+                        {
+                            photo === true ?
+                                (
+                                    <Webcam
+                                        audio={false}
+                                        width={540}
+                                        height={360}
+                                        ref={webcamRef}
+                                        screenshotFormat="image/jpeg"
+                                        videoConstraints={videoConstraints}
+                                    />
+                                ):null
+
+                        }
+
                     </div>
-                    <div>
-                        <Webcam
-                            audio={false}
-                            width={540}
-                            height={360}
-                            ref={webcamRef}
-                            screenshotFormat="image/jpeg"
-                            videoConstraints={videoConstraints}
-                        />
-                    </div>
-                    <button onClick={capture}>Prendre une photo</button>
+                    {
+                        photo === true ?  ( <button onClick={capture}>Prendre une photo</button>) : null
+                    }
+
                 </>
             )}
             {url && (
@@ -51,6 +61,7 @@ export const TakePhoto = () => {
                         <button
                             onClick={() => {
                                 setUrl(null);
+                                setPhoto(true)
                             }}
                         >
                             annuler et reprendre

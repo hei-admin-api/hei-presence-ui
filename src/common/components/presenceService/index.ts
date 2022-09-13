@@ -1,2 +1,2 @@
-export * from './Addevents';
+export * from './Addevent';
 export * from './EventForm';
