@@ -11,7 +11,7 @@ export const Info= ()=>{
             <Box display={"flex"} flexDirection={"column"} m={"5"}>
                 <Flash >
                     <StyledOcticon icon={InfoIcon} />
-                    Le saviez-vous,vous pouviez modifiez les absences jusqu'à une semaine après la date d'appel
+                    Le saviez-vous,vous pouviez modifier les absences jusqu'à une semaine après la date d'appel
                 </Flash>
                 <StudentList/>
             </Box>

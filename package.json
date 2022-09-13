@@ -19,6 +19,7 @@
     "@types/react-dom": "^18.0.4",
     "antd": "^4.23.1",
     "axios": "^0.27.2",
+    "chakra-ui-autocomplete": "^1.4.5",
     "formik": "^2.2.9",
     "framer-motion": "^6.5.1",
     "react": "^18.2.0",

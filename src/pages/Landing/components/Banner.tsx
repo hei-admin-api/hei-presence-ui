@@ -31,7 +31,7 @@ export const Banner = () => (
             <Addevent/>
         <ButtonGroup size='sm' isAttached variant='outline' colorScheme='red'>
             <IconButton aria-label={"Verifier l'absence "} icon={<BsListCheck/>} />
-            <Button>Vérifier l'appel déjà lancer</Button>
+            <Button>Vérifier une appel déjà lancée</Button>
         </ButtonGroup>
 
     </Stack>
@@ -40,8 +40,6 @@ export const Banner = () => (
             <ItemCard quantity={0} label={"en retard avec mot d'excuse"}/>
             <ItemCard quantity={2} label={"en retard"}/>
             <ItemCard quantity={1} label={"Absence injustifiée"}/>
-            <ItemCard quantity={2} label={"Absence justifiée"}/>
-            <ItemCard quantity={"juillet 2022"} label={"le moi qui compte plus d'absence"}/>
         </Stack>
     </Box>
   );
