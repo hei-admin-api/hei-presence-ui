@@ -1,18 +1,21 @@
-import Card from 'react-bootstrap/Card';
+import './assets/card.css';
 import {StatsCard} from "../../types/proptypes";
 
-function StatsCard(props:StatsCard) {
+export  const ItemCard =  (props:StatsCard) =>{
     return (
         <>
-            <Card style={{ width: '18rem' }}>
-                <Card.Body>
-                    <Card.Title>{props.quantity}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{props.label}</Card.Subtitle>
-                </Card.Body>
-            </Card>
+            {/*For displaying a card for stats*/}
+
+            <div className={"card__result"}>
+               <div className={"card__quantity"}>
+                   {props.quantity}
+               </div>
+                <div className={"card_content"}>
+                    {props.label}
+                </div>
+            </div>
         </>
 
     );
 }
 
-export default StatsCard;
