@@ -1,0 +1,11 @@
+.card__result{
+    width : 90%;
+    height: 20vh;
+    border: 1px solid black;
+}
+.card__quantity{
+    font-size: 15px;
+}
+.card_content{
+    font-size: 8px;
+}

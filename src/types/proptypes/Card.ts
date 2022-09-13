@@ -1,4 +1,4 @@
 export type StatsCard = {
-    quantity : number,
+    quantity : number | string,
     label : string
 }

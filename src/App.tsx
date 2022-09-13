@@ -8,6 +8,7 @@ import { DishEdit, DishList } from './pages/Admin/components/dish';
 import { OrderEdit } from './pages/Admin/components/order/OrderEdit';
 import { OrderList } from './pages/Admin/components/order';
 import { CategoryEdit, CategoryList } from './pages/Admin/components/category';
+import {TakePhoto} from "./common/components/TakePhoto";
 
 export const App = () => {
   return (
@@ -18,6 +19,7 @@ export const App = () => {
 
             <Route index element={<Navigate to="/landing" />} />
             <Route path="/landing" element={<Landing />} />
+            <Route path="/takephoto" element={<TakePhoto />} />
 
             <Route path="/admin" element={<Admin />}>
               <Route index element={<Navigate to="dishes" />} />

@@ -1,6 +1,6 @@
 import { useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
-import "./styles.css";
+
 
 const videoConstraints = {
     width: 720,
@@ -22,15 +22,15 @@ export const TakePhoto = () => {
     return (
         <>
             <header>
-                <h1>カメラアプリ</h1>
+                <h1>Présence faciale</h1>
             </header>
             {isCaptureEnable || (
-                <button onClick={() => setCaptureEnable(true)}>開始</button>
+                <button onClick={() => setCaptureEnable(true)}>Cadrez votre caméra pour que votre visage soit clair</button>
             )}
             {isCaptureEnable && (
                 <>
                     <div>
-                        <button onClick={() => setCaptureEnable(false)}>終了</button>
+                        <button onClick={() => setCaptureEnable(false)}></button>
                     </div>
                     <div>
                         <Webcam
@@ -42,7 +42,7 @@ export const TakePhoto = () => {
                             videoConstraints={videoConstraints}
                         />
                     </div>
-                    <button onClick={capture}>キャプチャ</button>
+                    <button onClick={capture}>Prendre une photo</button>
                 </>
             )}
             {url && (
@@ -53,7 +53,7 @@ export const TakePhoto = () => {
                                 setUrl(null);
                             }}
                         >
-                            削除
+                            annuler et reprendre
                         </button>
                     </div>
                     <div>
