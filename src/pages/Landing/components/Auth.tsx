@@ -1,98 +1,88 @@
-import React from 'react';
-import { Box, FormControl, InputRightElement, useDisclosure } from "@chakra-ui/react";
-import { useState } from "react";
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  Input,
+  Box,
   Button,
-  InputGroup,
+  Flex,
+  FormControl,
+  FormLabel,
+  Heading, Image,
+  Input,
   Stack,
-  InputLeftElement,
-  chakra,
-} from "@chakra-ui/react";
-import { FaUserAlt, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+  useColorModeValue, useToast,
+} from '@chakra-ui/react';
+import {useNavigate} from "react-router-dom";
+import {LoginBack} from "../../../conf/environment";
+import {useSafeTimeout} from "@primer/react";
 
-const CFaUserAlt = chakra(FaUserAlt);
-const CFaLock = chakra(FaLock);
-const CFaEye = chakra(FaEye);
-const CFaEyeSlash = chakra(FaEyeSlash);
+export const Authentication = ()=> {
+  const backLogin = LoginBack;
+  const navigate = useNavigate();
+  const toast = useToast();
+  const {safeSetTimeout, safeClearTimeout} = useSafeTimeout();
+  let timeoutId = null
 
-function LoginForm() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [showPassword, setShowPassword] = useState(false);
-  const handleShowClick = () => setShowPassword(!showPassword);
+  const handleOnClick = () => {
+    timeoutId = safeSetTimeout(() => navigate("/landing"), 3000)
+  }
 
   return (
-    <>
-      <Button onClick={onOpen}>Se connecter</Button>
+      <Box
+          backgroundImage={backLogin}
+          backgroundPosition="center"
+          backgroundRepeat="no-repeat"
+      >
+        <Flex
+            minH={'100vh'}
+            align={'center'}
+            justify={'center'}
 
-      <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={"2xl"}>
-        <ModalOverlay
-          bg='none'
-          backdropFilter='auto'
-          backdropInvert='80%'
-          backdropBlur='2px'
-        />
-        <ModalContent >
-          <Box minW={{ base: "100%", md: "510px" }}>
-            <form>
-              <Stack
-                spacing={4}
-                p="1rem"
-                backgroundColor="whiteAlpha.900"
-                boxShadow="md"
-              >
-                <FormControl>
-                  <InputGroup>
-                    <InputLeftElement
-                      pointerEvents="none"
-                      children={<CFaUserAlt color="gray.300" />}
-                    />
-                    <Input type="email" placeholder="Adresse email" />
-                  </InputGroup>
-                </FormControl>
-                <FormControl>
-                  <InputGroup>
-                    <InputLeftElement
-                      pointerEvents="none"
-                      color="gray.300"
-                      children={<CFaLock color="gray.300" />}
-                    />
-                    <Input
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Mot de Passe"
-                    />
-                    <InputRightElement width="4.5rem">
-                      <Button h="1.75rem" size="sm" onClick={handleShowClick}>
-                        {showPassword ? <CFaEye /> : <CFaEyeSlash />}
-                      </Button>
-                    </InputRightElement>
-                  </InputGroup>
-                </FormControl>
-                <Button
-                  borderRadius={0}
-                  type="submit"
-                  variant="solid"
-                  colorScheme="teal"
-                  width="full"
+        >
 
-                >
-                  <a href="http://192.168.0.123:3000">
-                    Se connecter
-                  </a>
+          <Stack
+              spacing={4}
+              w={'full'}
+              maxW={'md'}
+              bg={useColorModeValue('white', 'gray.700')}
+              rounded={'xl'}
+              boxShadow={'lg'}
+              p={6}
+              my={12}>
+            <Heading lineHeight={1.1} fontSize={{ base: '2xl', md: '3xl' }}>
+             Présence Faciale des étudiants
+            </Heading>
+            <FormControl id="email" isRequired>
+              <FormLabel>Email address</FormLabel>
+              <Input
+                  placeholder="hei.teacher@example.com"
+                  _placeholder={{ color: 'gray.500' }}
+                  type="email"
+              />
+            </FormControl>
+            <FormControl id="password" isRequired>
+              <FormLabel>Password</FormLabel>
+              <Input type="password" />
+            </FormControl>
+            <Stack spacing={6}>
+              <Button
+                  bg={'blue.400'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'blue.500',
+                  }} onClick={()=> {
+                  handleOnClick();
+                toast({
+                  title: 'Vous êtes connécté',
+                  description: "Lancez votre  présence",
+                  status: 'success',
+                  duration: 9000,
+                  isClosable: true,
+                })
+              }}>
+                Submit
+              </Button>
+            </Stack>
+          </Stack>
+        </Flex>
+      </Box>
 
-                </Button>
-              </Stack>
-            </form>
-          </Box>
-        </ModalContent>
-      </Modal>
-    </>
   );
 }
-
-export const Auth = () => (
-  <LoginForm />
-);

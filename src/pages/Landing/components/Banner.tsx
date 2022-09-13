@@ -20,7 +20,7 @@ import {BsListCheck, MdBuild, MdCall} from "react-icons/all";
 import {AddIcon} from "@chakra-ui/icons";
 import {ItemCard} from "../../../common/components/Card";
 import {Datapicker} from "../../../common/components/DatePicker";
-import {AddEvents} from "../../../common/components/presenceService/Addevents";
+import {Addevent} from "../../../common/components/presenceService/Addevent";
 
 export const Banner = () => (
     <Box display={"flex"} flexDirection={"column"} m={"5"}>
@@ -28,7 +28,7 @@ export const Banner = () => (
 
         {/*Bouton pour les actions*/}
 
-            <AddEvents/>
+            <Addevent/>
         <ButtonGroup size='sm' isAttached variant='outline' colorScheme='red'>
             <IconButton aria-label={"Verifier l'absence "} icon={<BsListCheck/>} />
             <Button>Vérifier l'appel déjà lancer</Button>

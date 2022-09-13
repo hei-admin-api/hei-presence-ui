@@ -9,3 +9,12 @@
 .card_content{
     font-size: 8px;
 }
+.title__modal{
+    font-size: 22px;
+    margin: 5px 5px 5px 5px;
+    padding: 5px 5px;
+}
+.content__modal{
+    margin: 5px 5px 5px 5px;
+    padding: 12px 12px;
+}
