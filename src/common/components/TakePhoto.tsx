@@ -14,18 +14,18 @@ const videoConstraints = {
 
 export const TakePhoto = () => {
 
-    // State for Webcam function
+     /* State for Webcam function */
     const [isCaptureEnable, setCaptureEnable] = useState<boolean>(false);
     const[photo,setPhoto] = useState<boolean |null >(true);
 
     const webcamRef = useRef<Webcam>(null);
     const [url, setUrl] = useState<string | null>(null);
-    // Initialize data hooks from providers
+    /*Initialize data hooks from providers*/
     const{save}= useData();
-    // Route Navigate initializer
+    /* Route Navigate initializer */
     const navigate = useNavigate();
 
-    // Post images to backend service
+    /* Post images to backend service */
     const SaveImage = ()=>{
         const sendToBack = async ()=>{
             try {
@@ -37,15 +37,15 @@ export const TakePhoto = () => {
         sendToBack();
     }
 
-    // Webcam function
+    {/*Webcam function*/}
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current?.getScreenshot();
         if (imageSrc) {
-            // Set image url
+            {/*Set image url */}
              setUrl(imageSrc);
-             // Set image webcam state
+            {/*Set image webcam state */}
              setPhoto(false);
-            //Send to Backend Server
+            {/*Send to Backend Server*/}
         SaveImage();
         }
     }, [webcamRef]);
@@ -54,7 +54,7 @@ export const TakePhoto = () => {
         <>
             <Navbar/>
 
-            // Title
+            {/*Title*/}
             <Center>
                 <header>
                     Présence par reconnaissance faciale faciale
@@ -63,12 +63,13 @@ export const TakePhoto = () => {
 
             <Center>
 
-            // webcam appareance
+             {/*webcam appareance*/}
+
             {isCaptureEnable || (
                     <Button onClick={() => setCaptureEnable(true)} colorScheme={"red"} w={"max-content"} h={"24"} rounded={"3xl"} display={"flex"} flexWrap={"wrap"}>Verifie ma présence</Button>
             )}
 
-            // Webcam state function,if true return the webcam else disapear the cam
+            {/*Webcam state function,if true return the webcam else disapear the cam*/}
             {isCaptureEnable && (
                 <>
                     <div>
@@ -97,7 +98,7 @@ export const TakePhoto = () => {
             )}
             </Center>
 
-            // After having some image,it can be previewed in ui from url.So more endpoint can be specified with some button
+            {/*After having some image,it can be previewed in ui from url.So more endpoint can be specified with some button*/}
             {url && (
                 <>
                     <Center>
@@ -128,7 +129,7 @@ export const TakePhoto = () => {
                 </>
             )}
 
-            // All of webcam function
+             {/*All of webcam function*/}
         </>
     );
 };

@@ -1,56 +1,99 @@
 import * as React from "react";
-import { ChakraProvider } from "@chakra-ui/react";
+import {Box, ChakraProvider} from "@chakra-ui/react";
 import { createColumnHelper } from "@tanstack/react-table";
-import { DataTable } from "./DataTable";
+import {ShowTable} from "./DataTable";
+import {student} from "../../../types/models/Student";
+import DataTable from "react-data-table-component";
+import Card from "@material-ui/core/Card";
+import SortIcon from "@material-ui/icons/ArrowDownward";
 
-type UnitConversion = {
-    fromUnit: string;
-    toUnit: string;
-    factor: number;
-};
 
-const data: UnitConversion[] = [
+
+const data = [
     {
-        fromUnit: "inches",
-        toUnit: "millimetres (mm)",
-        factor: 25.4
+        id : "STD2020",
+        firstName : "rakoto",
+        lastName : "rabemanajara",
+        group : "G2",
+        status: "EXCEPTED"
     },
     {
-        fromUnit: "feet",
-        toUnit: "centimetres (cm)",
-        factor: 30.48
+        id : "STD2020",
+        firstName : "rakoto",
+        lastName : "rabemanajara",
+        group : "G2",
+        status: "EXCEPTED"
     },
     {
-        fromUnit: "yards",
-        toUnit: "metres (m)",
-        factor: 0.91444
+        id : "STD2020",
+        firstName : "rakoto",
+        lastName : "rabemanajara",
+        group : "G2",
+        status: "EXCEPTED"
     }
 ];
-
-const columnHelper = createColumnHelper<UnitConversion>();
-
 const columns = [
-    columnHelper.accessor("fromUnit", {
-        cell: (info) => info.getValue(),
-        header: "To convert"
-    }),
-    columnHelper.accessor("toUnit", {
-        cell: (info) => info.getValue(),
-        header: "Into"
-    }),
-    columnHelper.accessor("factor", {
-        cell: (info) => info.getValue(),
-        header: "Multiply by",
-        meta: {
-            isNumeric: true
-        }
-    })
+    {
+        id : "REFERENCE",
+        firstName : "Firstname",
+        lastName : "LastName",
+        group : "Group",
+        status: "STATUS"
+    }
 ];
+// const columns = useMemo<GridColDef[]>(
+//     () => [
+//         {
+//             field: "id",
+//             headerName: "id",
+//             type: "string",
+//             ...centerAlignColumn,
+//             hide: true,
+//
+//         },
+//         { field: "firstName", type: "string" },
+//         { field: "lastName", type: "string" },
+//         {  field: "Group", type : "string"},
+//         {
+//             field: "creation",
+//             headerName: "creation date",
+//             type: "date",
+//             flex: 0.5,
+//             ...centerAlignColumn,
+//         },
+//         {
+//             field: "Actions",
+//             align: "right",
+//             headerAlign: "right",
+//             renderCell: (params: GridRenderCellParams) => (
+//                 <Box>
+//
+//                 </Box>
+//             ),
+//         },
+//     ],
+//     []
+// );
+
+
+const columnHelper = createColumnHelper<student>();
+
 
 export const  StudentList = ()=> {
     return (
         <ChakraProvider>
-            <DataTable columns={columns} data={data} />
+            <div className="App">
+                <Card>
+                    <DataTable
+                        title="Liste des étudiants"
+                        columns={columns}
+                        data={data}
+                        sortIcon={<SortIcon />}
+                        pagination
+                        selectableRows
+                    />
+                </Card>
+            </div>
         </ChakraProvider>
     );
 }
