@@ -1,24 +1,20 @@
 import {
-    Box,
-    Button,
-    Checkbox,
-    Flex,
     FormControl,
     FormLabel,
     FormErrorMessage,
     Input,
-    VStack, FormHelperText, IconButton
+    FormHelperText
 } from "@chakra-ui/react";
-import React, {ReactNode, useState} from "react";
+import React, { useState} from "react";
 import {EventItem} from "../../../types/proptypes/EventItem";
-import {SmallAddIcon} from "@chakra-ui/icons";
 
-export const EventForm = (props:EventItem)=> {
+
+export const EventForm = (props:EventItem,)=> {
     const [input, setInput] = useState('')
 
-    const handleInputChange = (e: any) => setInput(e.target.value);
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value);
 
-    const isError = input === ''
+    const isError = input === '';
 
     return (
         <FormControl isInvalid={isError} m={"auto"} p={"auto"}>
@@ -32,10 +28,10 @@ export const EventForm = (props:EventItem)=> {
 
             {!isError ? (
                 <FormHelperText>
-                    Votre {props.label} est correcte
+                  Correcte
                 </FormHelperText>
             ) : (
-                <FormErrorMessage>{props.label} est obligatoire.</FormErrorMessage>
+                <FormErrorMessage>Le champs {props.label.toLowerCase()} est obligatoire.</FormErrorMessage>
             )}
         </FormControl>
     )
