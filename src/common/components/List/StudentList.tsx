@@ -1,56 +1,61 @@
 import * as React from "react";
-import { ChakraProvider } from "@chakra-ui/react";
-import { createColumnHelper } from "@tanstack/react-table";
-import { DataTable } from "./DataTable";
+import {ChakraProvider} from "@chakra-ui/react";
+import DataTable from "react-data-table-component";
+import Card from "@material-ui/core/Card";
+import SortIcon from "@material-ui/icons/ArrowDownward";
 
-type UnitConversion = {
-    fromUnit: string;
-    toUnit: string;
-    factor: number;
-};
+import {staticData} from "../student";
 
-const data: UnitConversion[] = [
+
+
+
+
+const columns  = [
     {
-        fromUnit: "inches",
-        toUnit: "millimetres (mm)",
-        factor: 25.4
+        name: "id",
+        selector: "id",
+        sortable: true
     },
     {
-        fromUnit: "feet",
-        toUnit: "centimetres (cm)",
-        factor: 30.48
+        name: "Firstname",
+        selector: "dob",
+        sortable: true
     },
     {
-        fromUnit: "yards",
-        toUnit: "metres (m)",
-        factor: 0.91444
+        name: "lastName",
+        selector: "lastName",
+        sortable: true
+    },
+    {
+        name: "group",
+        selector: "group",
+        sortable: true
+    },
+
+    {
+        name: "status",
+        selector: "status",
+        sortable: true
     }
 ];
 
-const columnHelper = createColumnHelper<UnitConversion>();
-
-const columns = [
-    columnHelper.accessor("fromUnit", {
-        cell: (info) => info.getValue(),
-        header: "To convert"
-    }),
-    columnHelper.accessor("toUnit", {
-        cell: (info) => info.getValue(),
-        header: "Into"
-    }),
-    columnHelper.accessor("factor", {
-        cell: (info) => info.getValue(),
-        header: "Multiply by",
-        meta: {
-            isNumeric: true
-        }
-    })
-];
 
 export const  StudentList = ()=> {
+
     return (
         <ChakraProvider>
-            <DataTable columns={columns} data={data} />
+            <div className="App">
+                <Card>
+                    <DataTable
+                        title="Liste des étudiants"
+                        columns={columns}
+                        data={staticData}
+                        sortIcon={<SortIcon />}
+                        pagination
+                        selectableRows
+                    />
+                </Card>
+            </div>
         </ChakraProvider>
     );
 }

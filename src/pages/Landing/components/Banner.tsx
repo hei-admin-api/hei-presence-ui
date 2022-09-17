@@ -15,7 +15,7 @@ import {
     IconProps,
     useColorModeValue, ButtonGroup, Wrap,
 } from '@chakra-ui/react';
-import { ItemList } from "./List/ItemList";
+
 import {BsListCheck, MdBuild, MdCall} from "react-icons/all";
 import {AddIcon} from "@chakra-ui/icons";
 import {ItemCard} from "../../../common/components/Card";

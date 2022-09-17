@@ -8,21 +8,21 @@ import {
     ButtonGroup,
     useToast, Box, Icon, IconButton
 } from "@chakra-ui/react";
-import React from "react";
+import React, {useState} from "react";
 import {ModalBody, ModalFooter, ModalHeader} from "react-bootstrap";
 import {AddIcon, SmallAddIcon} from "@chakra-ui/icons";
 import {EventForm} from "./EventForm";
 import {useNavigate} from "react-router-dom";
 import {useSafeTimeout} from "@primer/react";
 import "../../components/assets/card.css";
-import {BsListCheck} from "react-icons/all";
+
 export const Addevent=()=> {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const navigate = useNavigate();
     const toast = useToast();
-    const {safeSetTimeout, safeClearTimeout} = useSafeTimeout();
+    const {safeSetTimeout} = useSafeTimeout();
     let timeoutId = null
-
+   const  [date,setDate] = useState("");
     const handleOnClick = () => {
         timeoutId = safeSetTimeout(() => navigate("/takephoto"), 1000)
     }
@@ -54,9 +54,11 @@ export const Addevent=()=> {
                     <ModalBody>
                         <div className={"content__modal"}>
                             <Box display={"flex"} flexDirection={"row"} alignItems={"center"} >
-                                <EventForm label={"Lieu"} />
-                                <IconButton aria-label={"Ajouter une nouvelle groupe"} icon={<SmallAddIcon/>} ml={"5"}/>
+                                <EventForm label={"Lieu"}/>
                             </Box>
+                            <input type="datetime-local" className="uk-input"  name="timeout[]" onChange={(e)=> {
+                                console.log(e.target.value)
+                            }}/>
                             <Box display={"flex"} flexDirection={"row"} alignItems={"center"} >
                                 <EventForm label={"Cours"} />
                                 <IconButton aria-label={"Ajouter une nouvelle groupe"} icon={<SmallAddIcon/>} ml={"5"}/>

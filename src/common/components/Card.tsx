@@ -1,5 +1,4 @@
-import './assets/card.css';
-import {StatsCard} from "../../types/proptypes";
+import './assets/card.css';import {StatsCard} from "../../types/proptypes";
 
 export  const ItemCard =  (props:StatsCard) =>{
     return (
