@@ -53,17 +53,18 @@ export const Addevent=()=> {
                     <ModalCloseButton onClick={onClose}/>
                     <ModalBody>
                         <div className={"content__modal"}>
+                            <EventForm label={"Type de l'evenement"}/>
                             <Box display={"flex"} flexDirection={"row"} alignItems={"center"} >
                                 <EventForm label={"Lieu"}/>
                             </Box>
-                            <input type="datetime-local" className="uk-input"  name="timeout[]" onChange={(e)=> {
-                                console.log(e.target.value)
-                            }}/>
+                            <Box display={"flex"} flexDirection={"row"} alignItems={"center"} >
+                               <EventForm type={"date"} label={"Date d'appel"} />
+                            </Box>
+
                             <Box display={"flex"} flexDirection={"row"} alignItems={"center"} >
                                 <EventForm label={"Cours"} />
                                 <IconButton aria-label={"Ajouter une nouvelle groupe"} icon={<SmallAddIcon/>} ml={"5"}/>
                             </Box>
-                            <EventForm label={"Nom de Professeur"}/>
                             <Box display={"flex"} flexDirection={"row"} alignItems={"center"} >
                                 <EventForm label={"Groupe"}/>
                                 <IconButton aria-label={"Ajouter une nouvelle groupe"} icon={<SmallAddIcon/>} ml={"5"}/>
