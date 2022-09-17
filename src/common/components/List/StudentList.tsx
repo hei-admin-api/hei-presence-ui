@@ -1,85 +1,47 @@
 import * as React from "react";
-import {Box, ChakraProvider} from "@chakra-ui/react";
-import { createColumnHelper } from "@tanstack/react-table";
-import {ShowTable} from "./DataTable";
-import {student} from "../../../types/models/Student";
+import {ChakraProvider} from "@chakra-ui/react";
 import DataTable from "react-data-table-component";
 import Card from "@material-ui/core/Card";
 import SortIcon from "@material-ui/icons/ArrowDownward";
 
+import {staticData} from "../student";
 
 
-const data = [
+
+
+
+const columns  = [
     {
-        id : "STD2020",
-        firstName : "rakoto",
-        lastName : "rabemanajara",
-        group : "G2",
-        status: "EXCEPTED"
+        name: "id",
+        selector: "id",
+        sortable: true
     },
     {
-        id : "STD2020",
-        firstName : "rakoto",
-        lastName : "rabemanajara",
-        group : "G2",
-        status: "EXCEPTED"
+        name: "Firstname",
+        selector: "dob",
+        sortable: true
     },
     {
-        id : "STD2020",
-        firstName : "rakoto",
-        lastName : "rabemanajara",
-        group : "G2",
-        status: "EXCEPTED"
-    }
-];
-const columns = [
+        name: "lastName",
+        selector: "lastName",
+        sortable: true
+    },
     {
-        id : "REFERENCE",
-        firstName : "Firstname",
-        lastName : "LastName",
-        group : "Group",
-        status: "STATUS"
+        name: "group",
+        selector: "group",
+        sortable: true
+    },
+
+    {
+        name: "status",
+        selector: "status",
+        sortable: true
     }
 ];
-// const columns = useMemo<GridColDef[]>(
-//     () => [
-//         {
-//             field: "id",
-//             headerName: "id",
-//             type: "string",
-//             ...centerAlignColumn,
-//             hide: true,
-//
-//         },
-//         { field: "firstName", type: "string" },
-//         { field: "lastName", type: "string" },
-//         {  field: "Group", type : "string"},
-//         {
-//             field: "creation",
-//             headerName: "creation date",
-//             type: "date",
-//             flex: 0.5,
-//             ...centerAlignColumn,
-//         },
-//         {
-//             field: "Actions",
-//             align: "right",
-//             headerAlign: "right",
-//             renderCell: (params: GridRenderCellParams) => (
-//                 <Box>
-//
-//                 </Box>
-//             ),
-//         },
-//     ],
-//     []
-// );
-
-
-const columnHelper = createColumnHelper<student>();
 
 
 export const  StudentList = ()=> {
+
     return (
         <ChakraProvider>
             <div className="App">
@@ -87,7 +49,7 @@ export const  StudentList = ()=> {
                     <DataTable
                         title="Liste des étudiants"
                         columns={columns}
-                        data={data}
+                        data={staticData}
                         sortIcon={<SortIcon />}
                         pagination
                         selectableRows

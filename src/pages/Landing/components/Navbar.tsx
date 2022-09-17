@@ -8,8 +8,9 @@ import {
     useColorModeValue,
     Stack,
     useColorMode,
-    BreadcrumbItem, Breadcrumb, BreadcrumbLink,
+    BreadcrumbItem, Breadcrumb, BreadcrumbLink, Button, Icon,
 } from '@chakra-ui/react';
+import {BiLogOut} from "react-icons/all";
 const NavLink = ({ children }: { children: ReactNode }) => (
     <Link
         px={2}
@@ -49,6 +50,9 @@ export default function Navbar() {
                                     <BreadcrumbItem isCurrentPage>
                                         <BreadcrumbLink >Fiche de présence</BreadcrumbLink>
                                     </BreadcrumbItem>
+                                    <Button>
+                                        <Icon as={BiLogOut}/>
+                                    </Button>
                                 </Breadcrumb>
                             </Menu>
                         </Stack>
